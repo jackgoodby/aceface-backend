@@ -5,3 +5,6 @@
 .cache
 .gocache
 .trivy-cache
+
+.aws-sam
+tmp
