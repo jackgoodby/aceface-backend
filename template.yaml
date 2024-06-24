@@ -11,6 +11,23 @@ Globals:
     Timeout: 5
     MemorySize: 128
 
+Parameters:
+  DBHOST:
+    Type: String
+    Default: 'localhost'
+  DBPORT:
+    Type: String
+    Default: '5432'
+  DBUSER:
+    Type: String
+    Default: 'aceface'
+  DBPASS:
+    Type: String
+    Default: 'aceface'
+  DBNAME:
+    Type: String
+    Default: 'postgres'
+
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -31,6 +48,29 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
+  GetMembersFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: src/lambda/getMembers/
+      Handler: bootstrap
+      Runtime: provided.al2
+      Architectures:
+        - x86_64
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /members
+            Method: GET
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          DB_HOST: !Ref DBHOST
+          DB_PORT: !Ref DBPORT
+          DB_USER: !Ref DBUSER
+          DB_PASS: !Ref DBPASS
+          DB_NAME: !Ref DBNAME
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

@@ -10,6 +10,13 @@ import (
 type ConfigStruct struct {
 	Region string
 
+	// Postgres
+	DBHost string
+	DBPort string
+	DBUser string
+	DBPass string
+	DBName string
+
 	// Database related
 	PrimaryTableName     string
 	EmailSignInSortKey   string
@@ -55,6 +62,11 @@ func GetConfig() *ConfigStruct {
 
 		Config = &ConfigStruct{
 			Region:                     common.GetEnv("AWS_REGION", "eu-west-2"),
+			DBHost:                     common.GetEnv("DB_HOST", ""),
+			DBPort:                     common.GetEnv("DB_PORT", ""),
+			DBUser:                     common.GetEnv("DB_USER", ""),
+			DBPass:                     common.GetEnv("DB_PASS", ""),
+			DBName:                     common.GetEnv("DB_NAME", ""),
 			PrimaryTableName:           common.GetEnv("PRIMARY_TABLE_NAME", ""),
 			EmailSignInSortKey:         "email",
 			ResetPasswordSortKey:       "reset",

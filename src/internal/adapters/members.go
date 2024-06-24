@@ -1,6 +1,7 @@
 package adapters
 
 import (
+	"fmt"
 	"github.com/jackgoodby/aceface-backend/internal/store"
 	"github.com/jackgoodby/aceface-backend/internal/types/model"
 )
@@ -13,25 +14,54 @@ type DdbMemberItem struct {
 	store.Member
 }
 
-func ReadMembers(applicationId string) (*DdbMemberItem, error) {
-	key := &KeyBasedStruct{
-		Id:          applicationId,
-		SecondaryId: "application",
-	}
+//func GetMembers() (*model.Members, error) {
+//
+//	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+//		os.Getenv("DB_HOST"),
+//		os.Getenv("DB_PORT"),
+//		os.Getenv("DB_USER"),
+//		os.Getenv("DB_PASSWORD"),
+//		os.Getenv("DB_NAME"))
+//
+//	db, err := sql.Open("postgres", connStr)
+//	if err != nil {
+//		log.Fatalf("Error opening database: %q", err)
+//		return events.APIGatewayProxyResponse{StatusCode: 500}, err
+//	}
+//	defer db.Close()
+//
+//	rows, err := db.Query("SELECT id, uuid, first_name, last_name, title, dob, profile_url, created_at, somebool FROM test_person")
+//	if err != nil {
+//		log.Fatalf("Error fetching data: %q", err)
+//		return events.APIGatewayProxyResponse{StatusCode: 500}, err
+//	}
+//	defer rows.Close()
+//
+//	var persons []Person
+//	for rows.Next() {
+//		var p Person
+//		if err := rows.Scan(&p.ID, &p.UUID, &p.FirstName, &p.LastName, &p.Title, &p.DOB, &p.ProfileURL, &p.CreatedAt, &p.SomeBool); err != nil {
+//			log.Fatalf("Error scanning row: %q", err)
+//			return events.APIGatewayProxyResponse{StatusCode: 500}, err
+//		}
+//		persons = append(persons, p)
+//	}
+//
+//	return result, nil
+//}
 
-	result := &DdbMemberItem{}
-	_, getItemErr := dynamodbGetWrapper(key, result)
-	if getItemErr != nil {
-		return &DdbMemberItem{}, getItemErr
-	}
+func GetMember(memberId int) (*model.Member, error) {
 
-	return result, nil
-}
+	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		config.DBHost,
+		config.DBPort,
+		config.DBUser,
+		config.DBPass,
+		config.DBName)
 
-func ReadMember(memberId int) (*model.Member, error) {
 	result := &model.Member{
 		Id:         1,
-		Uuid:       "12345-234234-234234-23423",
+		Uuid:       connStr,
 		FirstName:  "moofirst",
 		LastName:   "mooLast",
 		Title:      "Mr. ",

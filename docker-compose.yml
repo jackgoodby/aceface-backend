@@ -46,7 +46,7 @@ services:
         condition: service_healthy
     environment:
       DB_USER: aceface
-      DB_PASSWORD: aceface
+      DB_PASS: aceface
       DB_NAME: postgres
       DB_HOST: localhost
       DB_SCHEMA: public
