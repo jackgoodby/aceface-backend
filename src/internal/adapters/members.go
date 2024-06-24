@@ -1,7 +1,10 @@
 package adapters
 
 import (
+	"context"
 	"fmt"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackgoodby/aceface-backend/internal/common"
 	"github.com/jackgoodby/aceface-backend/internal/store"
 	"github.com/jackgoodby/aceface-backend/internal/types/model"
 )
@@ -52,23 +55,49 @@ type DdbMemberItem struct {
 
 func GetMember(memberId int) (*model.Member, error) {
 
-	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		config.DBHost,
-		config.DBPort,
+	ctx := context.Background()
+
+	connStr := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s",
 		config.DBUser,
 		config.DBPass,
+		config.DBHost,
+		config.DBPort,
 		config.DBName)
 
+	//connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	//	config.DBHost,
+	//	config.DBPort,
+	//	config.DBUser,
+	//	config.DBPass,
+	//	config.DBName)
+
+	conn, err := pgx.Connect(ctx, connStr)
+	if err != nil {
+		return nil, err
+	}
+	defer func(conn *pgx.Conn, ctx context.Context) {
+		_ = conn.Close(ctx)
+	}(conn, ctx)
+
+	Store := store.New(conn)
+	//Service := service.Service{Store: Store}
+	//server := api.Server{Logger: logger, Service: &Service}
+
+	memberData, err := Store.GetMember(ctx, int32(memberId))
+	if err != nil {
+		return nil, err
+	}
+
 	result := &model.Member{
-		Id:         1,
+		Id:         int(memberData.ID),
 		Uuid:       connStr,
-		FirstName:  "moofirst",
-		LastName:   "mooLast",
-		Title:      "Mr. ",
-		Dob:        "1977-03-08",
-		Email:      "moo@moo.com",
-		ProfileUrl: "moo",
-		CreatedAt:  "2024-06-24 11:26:00",
+		FirstName:  memberData.FirstName,
+		LastName:   memberData.LastName,
+		Title:      memberData.Title,
+		Dob:        common.Date{Time: memberData.Dob.Time},
+		Email:      memberData.Email,
+		ProfileUrl: memberData.ProfileUrl,
+		CreatedAt:  common.Date{Time: memberData.CreatedAt.Time},
 	}
 
 	return result, nil

@@ -13,7 +13,7 @@ import (
 func lambdaAdapter(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	//memberId := request.PathParameters["memberId"]
 
-	memberId := 5
+	memberId := 1
 	member, err := logic(memberId)
 	if err != nil {
 		return events.APIGatewayProxyResponse{}, err

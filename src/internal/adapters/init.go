@@ -1,9 +1,8 @@
 package adapters
 
 import (
-	"go.uber.org/zap"
-
 	configMod "github.com/jackgoodby/aceface-backend/internal/common/config"
+	"go.uber.org/zap"
 )
 
 var logger *zap.Logger

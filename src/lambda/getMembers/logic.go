@@ -6,7 +6,6 @@ import (
 )
 
 func logic(memberId int) (*model.Member, error) {
-
 	memberItem, readAppErr := adapters.GetMember(memberId)
 	return memberItem, readAppErr
 }
