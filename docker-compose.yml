@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  #    dynamodb-local:
+  #      command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+  #      image: "amazon/dynamodb-local:latest"
+  #      container_name: dynamodb-local
+  #      ports:
+  #          - "8000:8000"
+  #      volumes:
+  #          - "./docker/dynamodb:/home/dynamodblocal/data"
+  #      working_dir: /home/dynamodblocal
+
+  sqlc-gen:
+    image: kjconroy/sqlc
+    working_dir: /src
+    volumes:
+      - ./src/internal/store:/src
+      - ./src/internal/migrations:/schema
+    command: generate
+
+  aceface-db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=aceface
+      - POSTGRES_PASSWORD=aceface
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./src/internal/migrations/1_baseline.sql:/docker-entrypoint-initdb.d/1_baseline.sql
+      - ./src/internal/test-data/seed_data.sql:/seed_data.sql
+    healthcheck:
+      test: pg_isready --username=aceface --dbname=postgres
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migration:
+    image: alpine:latest
+    build:
+      dockerfile: docker/migration/Dockerfile
+    volumes:
+      - ./src/internal/migrations:/migrations
+    depends_on:
+      aceface-db:
+        condition: service_healthy
+    environment:
+      DB_USER: aceface
+      DB_PASSWORD: aceface
+      DB_NAME: postgres
+      DB_HOST: localhost
+      DB_SCHEMA: public
+      DB_PORT: 5432
+      DB_CONNECTION: aceface-db:5432
+    command: "up"
