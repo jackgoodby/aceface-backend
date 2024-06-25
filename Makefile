@@ -32,9 +32,12 @@ sqlc-gen:
 #sqlc-diff:
 #	docker compose run --rm sqlc-diff
 
-lambda-build:
+lambda-check:
 	mkdir -p tmp/
+	rm -Rf tmp/bootstrap
 	cd src/lambda/getMembers && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../tmp/bootstrap .
+	rm -Rf tmp/bootstrap
+	cd src/lambda/getMember && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../tmp/bootstrap .
 
 sam-build:
 	sam build

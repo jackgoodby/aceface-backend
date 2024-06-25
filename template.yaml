@@ -14,7 +14,7 @@ Globals:
 Parameters:
   DBHOST:
     Type: String
-    Default: 'localhost'
+    Default: 'host.docker.internal'
   DBPORT:
     Type: String
     Default: '5432'
@@ -29,25 +29,6 @@ Parameters:
     Default: 'postgres'
 
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Metadata:
-      BuildMethod: go1.x
-    Properties:
-      CodeUri: hello-world/
-      Handler: bootstrap
-      Runtime: provided.al2
-      Architectures:
-        - x86_64
-      Events:
-        CatchAll:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: GET
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-        Variables:
-          PARAM1: VALUE
   GetMembersFunction:
     Type: AWS::Serverless::Function
     Metadata:
@@ -63,6 +44,29 @@ Resources:
           Type: Api
           Properties:
             Path: /members
+            Method: GET
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          DB_HOST: !Ref DBHOST
+          DB_PORT: !Ref DBPORT
+          DB_USER: !Ref DBUSER
+          DB_PASS: !Ref DBPASS
+          DB_NAME: !Ref DBNAME
+  GetMemberFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: src/lambda/getMember/
+      Handler: bootstrap
+      Runtime: provided.al2
+      Architectures:
+        - x86_64
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /members/{id}
             Method: GET
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:

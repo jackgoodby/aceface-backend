@@ -5,7 +5,7 @@ import (
 	"github.com/jackgoodby/aceface-backend/internal/types/model"
 )
 
-func logic() (*model.Members, error) {
-	items, readAppErr := adapters.GetMembers()
-	return items, readAppErr
+func logic(id int) (*model.Member, error) {
+	item, readAppErr := adapters.GetMember(id)
+	return item, readAppErr
 }

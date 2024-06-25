@@ -1,22 +1,10 @@
 package adapters
 
-import (
-	"context"
-	"sync"
+//var awsConfig aws.Config
+//var onceAwsConfig sync.Once
 
-	"github.com/aws/aws-sdk-go-v2/aws"
-	awsConfigMod "github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	//"github.com/aws/aws-sdk-go-v2/service/s3"
-	//"github.com/aws/aws-sdk-go-v2/service/ses"
-	//"github.com/aws/aws-sdk-go-v2/service/sns"
-)
-
-var awsConfig aws.Config
-var onceAwsConfig sync.Once
-
-var dynamodbClient *dynamodb.Client
-var onceDdbClient sync.Once
+//var dynamodbClient *dynamodb.Client
+//var onceDdbClient sync.Once
 
 //var s3Client *s3.Client
 //var onceS3Client sync.Once
@@ -27,31 +15,31 @@ var onceDdbClient sync.Once
 //var snsClient *sns.Client
 //var onceSnsClient sync.Once
 
-func getAwsConfig() aws.Config {
-	onceAwsConfig.Do(func() {
-		var err error
-		awsConfig, err = awsConfigMod.LoadDefaultConfig(context.TODO())
-		if err != nil {
-			panic(err)
-		}
-	})
+//func getAwsConfig() aws.Config {
+//	onceAwsConfig.Do(func() {
+//		var err error
+//		awsConfig, err = awsConfigMod.LoadDefaultConfig(context.TODO())
+//		if err != nil {
+//			panic(err)
+//		}
+//	})
+//
+//	return awsConfig
+//}
 
-	return awsConfig
-}
-
-func GetDynamodbClient() *dynamodb.Client {
-	onceDdbClient.Do(func() {
-		awsConfig = getAwsConfig()
-
-		region := config.Region
-
-		dynamodbClient = dynamodb.NewFromConfig(awsConfig, func(opt *dynamodb.Options) {
-			opt.Region = region
-		})
-	})
-
-	return dynamodbClient
-}
+//func GetDynamodbClient() *dynamodb.Client {
+//	onceDdbClient.Do(func() {
+//		awsConfig = getAwsConfig()
+//
+//		region := config.Region
+//
+//		dynamodbClient = dynamodb.NewFromConfig(awsConfig, func(opt *dynamodb.Options) {
+//			opt.Region = region
+//		})
+//	})
+//
+//	return dynamodbClient
+//}
 
 //func GetS3Client() *s3.Client {
 //	onceS3Client.Do(func() {
