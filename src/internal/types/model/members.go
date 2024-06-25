@@ -1,14 +1,14 @@
 package model
 
 import (
-	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/google/uuid"
 	"github.com/jackgoodby/aceface-backend/internal/common"
 )
 
 type Members []Member
 
 type Member struct {
-	Uuid       pgtype.UUID `json:"uuid"`
+	Uuid       uuid.UUID   `json:"uuid"`
 	FirstName  string      `json:"first_name"`
 	LastName   string      `json:"last_name"`
 	Title      string      `json:"title"`

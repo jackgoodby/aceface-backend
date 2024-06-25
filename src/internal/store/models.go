@@ -5,12 +5,13 @@
 package store
 
 import (
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Member struct {
 	ID         int32
-	Uuid       pgtype.UUID
+	Uuid       uuid.UUID
 	FirstName  pgtype.Text
 	LastName   pgtype.Text
 	Title      pgtype.Text

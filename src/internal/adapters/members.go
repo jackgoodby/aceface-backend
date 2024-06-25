@@ -80,13 +80,8 @@ func GetMember(uuid uuid.UUID) (*model.Member, error) {
 	}
 	defer conn.Close(ctx)
 
-	//convert uuid into a pgUUID
-	var pgUUID pgtype.UUID
-	copy(pgUUID.Bytes[:], uuid[:])
-	//pgUUID.Status = pgtype.Present
-
 	storeQueries := store.New(conn)
-	result, err := storeQueries.GetMember(ctx, pgUUID)
+	result, err := storeQueries.GetMember(ctx, uuid)
 	if err != nil {
 		return nil, err
 	}

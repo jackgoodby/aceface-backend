@@ -8,15 +8,15 @@ package store
 import (
 	"context"
 
-	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/google/uuid"
 )
 
 const getMember = `-- name: GetMember :one
 SELECT id, uuid, first_name, last_name, title, dob, email, profile_url, created_at FROM member WHERE uuid = $1
 `
 
-func (q *Queries) GetMember(ctx context.Context, uuid pgtype.UUID) (Member, error) {
-	row := q.db.QueryRow(ctx, getMember, uuid)
+func (q *Queries) GetMember(ctx context.Context, argUuid uuid.UUID) (Member, error) {
+	row := q.db.QueryRow(ctx, getMember, argUuid)
 	var i Member
 	err := row.Scan(
 		&i.ID,
