@@ -5,25 +5,17 @@ import (
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackgoodby/aceface-backend/internal/common"
 	"github.com/jackgoodby/aceface-backend/internal/store"
 	"github.com/jackgoodby/aceface-backend/internal/types/model"
 )
-
-func stringToPgtypeText(s string) pgtype.Text {
-	var pgText pgtype.Text
-	pgText.String = s
-	//pgText.Status = pgtype.Present
-	return pgText
-}
 
 func GetMembers() (*model.Members, error) {
 	ctx := context.Background()
 
 	//logger := zap.Must(zap.NewProduction(zap.Fields(zap.String("service_name", "opg-sirius-finance-api")))).Sugar()
 
-	// get completed string from config
+	// get completed string from config - get username and pass from secretsmanager
 	connStr := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s",
 		config.DBUser,
 		config.DBPass,

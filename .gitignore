@@ -8,3 +8,4 @@
 
 .aws-sam
 tmp
+localstack

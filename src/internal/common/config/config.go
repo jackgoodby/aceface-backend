@@ -40,7 +40,7 @@ type ConfigStruct struct {
 	SourceEmailAddress         string
 }
 
-var Config *ConfigStruct
+var AppConfig *ConfigStruct
 var onceConfig sync.Once
 
 func GetConfig() *ConfigStruct {
@@ -60,7 +60,7 @@ func GetConfig() *ConfigStruct {
 			panic(refreshTokenExpParseErr)
 		}
 
-		Config = &ConfigStruct{
+		AppConfig = &ConfigStruct{
 			Region:                     common.GetEnv("AWS_REGION", "eu-west-2"),
 			DBHost:                     common.GetEnv("DB_HOST", ""),
 			DBPort:                     common.GetEnv("DB_PORT", ""),
@@ -83,5 +83,5 @@ func GetConfig() *ConfigStruct {
 			SourceEmailAddress:         common.GetEnv("SOURCE_EMAIL_ADDRESS", ""),
 		}
 	})
-	return Config
+	return AppConfig
 }
