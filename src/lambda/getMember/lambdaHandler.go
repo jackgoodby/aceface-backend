@@ -6,21 +6,19 @@ import (
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/google/uuid"
 	"github.com/jackgoodby/aceface-backend/internal/common"
 	"github.com/jackgoodby/aceface-backend/internal/types"
 	"net/http"
-	"strconv"
 )
 
 func lambdaAdapter(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
-	s := request.PathParameters["id"]
-
-	id, err := strconv.Atoi(s)
+	id, err := uuid.Parse(request.PathParameters["uuid"])
 	if err != nil {
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
-			Body:       fmt.Sprintf("Invalid path parameter: %s must be an integer", s),
+			Body:       fmt.Sprint("Invalid path parameter: uuid must be a UUID"),
 		}, nil
 	}
 

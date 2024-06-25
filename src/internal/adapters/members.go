@@ -3,11 +3,20 @@ package adapters
 import (
 	"context"
 	"fmt"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackgoodby/aceface-backend/internal/common"
 	"github.com/jackgoodby/aceface-backend/internal/store"
 	"github.com/jackgoodby/aceface-backend/internal/types/model"
 )
+
+func stringToPgtypeText(s string) pgtype.Text {
+	var pgText pgtype.Text
+	pgText.String = s
+	//pgText.Status = pgtype.Present
+	return pgText
+}
 
 func GetMembers() (*model.Members, error) {
 	ctx := context.Background()
@@ -39,12 +48,12 @@ func GetMembers() (*model.Members, error) {
 	for _, mem := range results {
 		var member = model.Member{
 			Uuid:       mem.Uuid,
-			FirstName:  mem.FirstName,
-			LastName:   mem.LastName,
-			Title:      mem.Title,
+			FirstName:  mem.FirstName.String,
+			LastName:   mem.LastName.String,
+			Title:      mem.Title.String,
 			Dob:        common.Date{Time: mem.Dob.Time},
-			Email:      mem.Email,
-			ProfileUrl: mem.ProfileUrl,
+			Email:      mem.Email.String,
+			ProfileUrl: mem.ProfileUrl.String,
 			CreatedAt:  common.Date{Time: mem.CreatedAt.Time},
 		}
 
@@ -54,7 +63,7 @@ func GetMembers() (*model.Members, error) {
 	return &members, nil
 }
 
-func GetMember(memberId int) (*model.Member, error) {
+func GetMember(uuid uuid.UUID) (*model.Member, error) {
 	ctx := context.Background()
 
 	// get completed string from config
@@ -71,20 +80,25 @@ func GetMember(memberId int) (*model.Member, error) {
 	}
 	defer conn.Close(ctx)
 
+	//convert uuid into a pgUUID
+	var pgUUID pgtype.UUID
+	copy(pgUUID.Bytes[:], uuid[:])
+	//pgUUID.Status = pgtype.Present
+
 	storeQueries := store.New(conn)
-	result, err := storeQueries.GetMember(ctx, int32(memberId))
+	result, err := storeQueries.GetMember(ctx, pgUUID)
 	if err != nil {
 		return nil, err
 	}
 
 	member := &model.Member{
 		Uuid:       result.Uuid,
-		FirstName:  result.FirstName,
-		LastName:   result.LastName,
-		Title:      result.Title,
+		FirstName:  result.FirstName.String,
+		LastName:   result.LastName.String,
+		Title:      result.Title.String,
 		Dob:        common.Date{Time: result.Dob.Time},
-		Email:      result.Email,
-		ProfileUrl: result.ProfileUrl,
+		Email:      result.Email.String,
+		ProfileUrl: result.ProfileUrl.String,
 		CreatedAt:  common.Date{Time: result.CreatedAt.Time},
 	}
 

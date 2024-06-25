@@ -40,6 +40,7 @@ lambda-check:
 	cd src/lambda/getMember && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../tmp/bootstrap .
 
 sam-build:
+	rm -Rf .aws-sam/cache/*
 	sam build
 
 sam-deploy:

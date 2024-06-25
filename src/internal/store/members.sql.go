@@ -7,14 +7,16 @@ package store
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const getMember = `-- name: GetMember :one
-SELECT id, uuid, first_name, last_name, title, dob, email, profile_url, created_at FROM member WHERE id = $1
+SELECT id, uuid, first_name, last_name, title, dob, email, profile_url, created_at FROM member WHERE uuid = $1
 `
 
-func (q *Queries) GetMember(ctx context.Context, id int32) (Member, error) {
-	row := q.db.QueryRow(ctx, getMember, id)
+func (q *Queries) GetMember(ctx context.Context, uuid pgtype.UUID) (Member, error) {
+	row := q.db.QueryRow(ctx, getMember, uuid)
 	var i Member
 	err := row.Scan(
 		&i.ID,
