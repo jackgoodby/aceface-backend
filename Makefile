@@ -37,11 +37,13 @@ sqlc-gen:
 #	docker compose run --rm sqlc-diff
 
 lambda-check:
-	mkdir -p tmp/
-	rm -Rf tmp/bootstrap
-	cd src/lambda/getMembers && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../tmp/bootstrap .
-	rm -Rf tmp/bootstrap
-	cd src/lambda/getMember && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../tmp/bootstrap .
+	#mkdir -p tmp/
+	#rm -Rf tmp/bootstrap
+	rm -Rf .aws-sam/build/GetMemberFunction/bootstrap
+	rm -Rf .aws-sam/build/GetMembersFunction/bootstrap
+	rm -Rf .aws-sam/cache/*
+	cd src/lambda/getMember && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../.aws-sam/build/GetMemberFunction/bootstrap .
+	cd src/lambda/getMembers && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../.aws-sam/build/GetMembersFunction/bootstrap .
 
 sam-build:
 	rm -Rf .aws-sam/cache/*

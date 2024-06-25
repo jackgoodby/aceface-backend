@@ -6,6 +6,5 @@
 .gocache
 .trivy-cache
 
-.aws-sam
 tmp
 localstack

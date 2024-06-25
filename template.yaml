@@ -8,9 +8,6 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Runtime: go1.x
-    Architectures:
-      - x86_64
     Timeout: 5
     MemorySize: 128
     VpcConfig:
@@ -66,6 +63,9 @@ Resources:
     Properties:
       CodeUri: src/lambda/getMembers/
       Handler: bootstrap
+      Runtime: provided.al2
+      Architectures:
+        - x86_64
       Role: arn:aws:iam::196325156910:role/aceface-lambda-rds-full
       Events:
         ApiEvent:
@@ -83,6 +83,9 @@ Resources:
     Properties:
       CodeUri: src/lambda/getMember/
       Handler: bootstrap
+      Runtime: provided.al2
+      Architectures:
+        - x86_64
       Role: arn:aws:iam::196325156910:role/aceface-lambda-rds-full
       Events:
         ApiEvent:
