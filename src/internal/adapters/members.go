@@ -48,11 +48,11 @@ func GetMembers() (*model.Members, error) {
 	for _, mem := range results {
 		var member = model.Member{
 			Uuid:       mem.Uuid,
-			FirstName:  mem.FirstName.String,
-			LastName:   mem.LastName.String,
-			Title:      mem.Title.String,
+			FirstName:  mem.FirstName,
+			LastName:   mem.LastName,
+			Title:      mem.Title,
 			Dob:        common.Date{Time: mem.Dob.Time},
-			Email:      mem.Email.String,
+			Email:      mem.Email,
 			ProfileUrl: mem.ProfileUrl.String,
 			CreatedAt:  common.Date{Time: mem.CreatedAt.Time},
 		}
@@ -88,11 +88,11 @@ func GetMember(uuid uuid.UUID) (*model.Member, error) {
 
 	member := &model.Member{
 		Uuid:       result.Uuid,
-		FirstName:  result.FirstName.String,
-		LastName:   result.LastName.String,
-		Title:      result.Title.String,
+		FirstName:  result.FirstName,
+		LastName:   result.LastName,
+		Title:      result.Title,
 		Dob:        common.Date{Time: result.Dob.Time},
-		Email:      result.Email.String,
+		Email:      result.Email,
 		ProfileUrl: result.ProfileUrl.String,
 		CreatedAt:  common.Date{Time: result.CreatedAt.Time},
 	}

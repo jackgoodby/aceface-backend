@@ -4,8 +4,7 @@ WHITE  := $(shell tput -Txterm setaf 7)
 YELLOW := $(shell tput -Txterm setaf 3)
 RESET  := $(shell tput -Txterm sgr0)
 
-#up: clean build-dev start-and-seed sqlc-gen
-up: clean build-dev start-and-seed
+up: clean build-dev start-and-seed sqlc-gen
 	#docker compose -f docker-compose.yml up -d aceface-db
 
 clean:

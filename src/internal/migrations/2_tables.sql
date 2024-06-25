@@ -3,11 +3,11 @@ CREATE TABLE member
 (
     id integer not null primary key,
     uuid UUID DEFAULT uuid_generate_v4() NOT NULL,
-    first_name varchar(255),
-    last_name varchar(255),
-    title varchar(20),
+    first_name varchar(255) NOT NULL,
+    last_name varchar(255) NOT NULL,
+    title varchar(20) NOT NULL,
     dob date,
-    email varchar(255),
+    email varchar(255) NOT NULL,
     profile_url varchar(255),
     created_at timestamp(0) default NULL::timestamp without time zone
 );

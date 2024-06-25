@@ -22,10 +22,6 @@ func lambdaAdapter(ctx context.Context, request events.APIGatewayProxyRequest) (
 		}, nil
 	}
 
-	// Accessing query string parameters
-	//queryParam := request.QueryStringParameters["yourQueryParameter"]
-	//fmt.Printf("Query Parameter: %s\n", queryParam)
-
 	member, err := logic(id)
 	if err != nil {
 		return events.APIGatewayProxyResponse{}, err

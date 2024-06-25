@@ -12,11 +12,11 @@ import (
 type Member struct {
 	ID         int32
 	Uuid       uuid.UUID
-	FirstName  pgtype.Text
-	LastName   pgtype.Text
-	Title      pgtype.Text
+	FirstName  string
+	LastName   string
+	Title      string
 	Dob        pgtype.Date
-	Email      pgtype.Text
+	Email      string
 	ProfileUrl pgtype.Text
 	CreatedAt  pgtype.Timestamp
 }
