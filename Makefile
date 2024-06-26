@@ -5,13 +5,13 @@ YELLOW := $(shell tput -Txterm setaf 3)
 RESET  := $(shell tput -Txterm sgr0)
 
 up: clean build-dev init-param-store init-db-seed sqlc-gen
-	#docker compose -f docker-compose.yml up -d aceface-db
 
 clean:
 	docker compose -f docker-compose.yml down -v --remove-orphans
 	#docker compose run --rm yarn
 
 build-dev:
+	#docker compose -f docker-compose.yml build --no-cache aceface-db
 	docker compose -f docker-compose.yml build aceface-db
 	docker compose -f docker-compose.yml build localstack
 
@@ -27,9 +27,6 @@ init-db-seed:
 down:
 	docker compose down
 
-build:
-	docker compose build --no-cache --parallel aceface-db
-
 sqlc-gen:
 	docker compose run --rm sqlc-gen
 
@@ -37,8 +34,6 @@ sqlc-gen:
 #	docker compose run --rm sqlc-diff
 
 lambda-check:
-	#mkdir -p tmp/
-	#rm -Rf tmp/bootstrap
 	rm -Rf .aws-sam/build/GetMemberFunction/bootstrap
 	rm -Rf .aws-sam/build/GetMembersFunction/bootstrap
 	rm -Rf .aws-sam/cache/*
@@ -49,7 +44,8 @@ sam-build:
 	rm -Rf .aws-sam/cache/*
 	sam build
 
-sam-deploy:
+sam-deploy: sam-build
+	aws ssm put-parameter --name "LAMBDA_ENV" --value "aws" --type "String" --overwrite > /dev/null
 	rm -Rf .aws-sam/build/template.yaml
 	sam deploy --guided
 
@@ -58,5 +54,3 @@ sam-invoke:
 
 sam-run-api-server:
 	sam local start-api --debug
-
-

@@ -8,3 +8,5 @@
 
 tmp
 localstack
+samconfig.toml
+.aws-sam
