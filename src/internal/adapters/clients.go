@@ -1,16 +1,7 @@
 package adapters
 
-import (
-	"context"
-	"github.com/aws/aws-sdk-go-v2/aws"
-	awsConfigMod "github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/service/ssm"
-	"log"
-	"sync"
-)
-
-var awsConfig aws.Config
-var onceAwsConfig sync.Once
+//var awsConfig aws.Config
+//var onceAwsConfig sync.Once
 
 //var dynamodbClient *dynamodb.Client
 //var onceDdbClient sync.Once
@@ -24,30 +15,30 @@ var onceAwsConfig sync.Once
 //var snsClient *sns.Client
 //var onceSnsClient sync.Once
 
-var ssmClient *ssm.Client
-var onceSsmClient sync.Once
+//var ssmClient *ssm.Client
+//var onceSsmClient sync.Once
 
-func getAwsConfig() aws.Config {
-	cfg, err := awsConfigMod.LoadDefaultConfig(context.TODO())
-	if err != nil {
-		log.Fatalf("unable to load AWS SDK config, %v", err)
-	}
-	return cfg
-}
-
-func GetSsmClient() *ssm.Client {
-	onceSsmClient.Do(func() {
-		awsConfig = getAwsConfig()
-
-		region := config.Region
-
-		ssmClient = ssm.NewFromConfig(awsConfig, func(opt *ssm.Options) {
-			opt.Region = region
-		})
-	})
-
-	return ssmClient
-}
+//func getAwsConfig() aws.Config {
+//	cfg, err := awsConfigMod.LoadDefaultConfig(context.TODO())
+//	if err != nil {
+//		log.Fatalf("unable to load AWS SDK config, %v", err)
+//	}
+//	return cfg
+//}
+//
+//func GetSsmClient() *ssm.Client {
+//	onceSsmClient.Do(func() {
+//		awsConfig = getAwsConfig()
+//
+//		region := config.Region
+//
+//		ssmClient = ssm.NewFromConfig(awsConfig, func(opt *ssm.Options) {
+//			opt.Region = region
+//		})
+//	})
+//
+//	return ssmClient
+//}
 
 //func GetDynamodbClient() *dynamodb.Client {
 //	onceDdbClient.Do(func() {
