@@ -7,6 +7,9 @@ RESET  := $(shell tput -Txterm sgr0)
 up: clean build-dev init-param-store init-db-seed sqlc-gen
 
 clean:
+	rm -Rf .aws-sam/build/*/bootstrap
+	rm -Rf .aws-sam/build/template.yaml
+	rm -Rf .aws-sam/cache/*
 	docker compose -f docker-compose.yml down -v --remove-orphans
 	#docker compose run --rm yarn
 
@@ -17,7 +20,7 @@ build-dev:
 
 init-param-store:
 	docker compose up -d --wait localstack
-	aws ssm put-parameter --name "LAMBDA_ENV" --value "local" --type "String" --profile localstack --overwrite > /dev/null
+	aws ssm put-parameter --name "LAMBDA_ENV" --value "local" --type "String" --profile default --overwrite > /dev/null
 
 init-db-seed:
 	docker compose up -d --wait aceface-db
@@ -40,14 +43,10 @@ lambda-check:
 	cd src/lambda/getMember && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../.aws-sam/build/GetMemberFunction/bootstrap .
 	cd src/lambda/getMembers && GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o ../../../.aws-sam/build/GetMembersFunction/bootstrap .
 
+# Running automated versions of these commands through Make messes with the final binary.
+# Use sam build, and sam deploy --guided instead.
 sam-build:
-	rm -Rf .aws-sam/cache/*
-	sam build
-
-sam-deploy: sam-build
-	aws ssm put-parameter --name "LAMBDA_ENV" --value "aws" --type "String" --overwrite > /dev/null
-	rm -Rf .aws-sam/build/template.yaml
-	sam deploy --guided
+sam-deploy:
 
 sam-invoke:
 	sam local invoke GetMembersFunction
