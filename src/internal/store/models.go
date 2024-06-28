@@ -9,6 +9,14 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Court struct {
+	ID          int32
+	Uuid        uuid.UUID
+	CourtNumber int32
+	AltName     pgtype.Text
+	Surface     string
+}
+
 type Member struct {
 	ID         int32
 	Uuid       uuid.UUID

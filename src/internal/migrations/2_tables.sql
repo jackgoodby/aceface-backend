@@ -18,5 +18,21 @@ CREATE INDEX idx_member_uuid
 CREATE UNIQUE INDEX uniq_26df0c148a90aba9
     ON member(uuid);
 
+CREATE TABLE court
+(
+    id integer NOT NULL PRIMARY KEY,
+    uuid UUID DEFAULT uuid_generate_v4() NOT NULL,
+    court_number integer NOT NULL,
+    alt_name varchar(255),
+    surface varchar(20) NOT NULL
+);
+
+CREATE INDEX idx_court_uuid
+    ON court (uuid);
+
+CREATE UNIQUE INDEX uniq_26df0a9c148a90ab
+    ON court(uuid);
+
 -- +goose Down
+DROP TABLE court;
 DROP TABLE member;
