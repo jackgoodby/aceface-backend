@@ -15,6 +15,15 @@ type Court struct {
 	CourtNumber int32
 	AltName     pgtype.Text
 	Surface     string
+	SlotSetID   uuid.UUID
+}
+
+type CourtSlotSet struct {
+	ID          int32
+	Uuid        uuid.UUID
+	Name        string
+	Description pgtype.Text
+	SlotTimes   []byte
 }
 
 type Member struct {

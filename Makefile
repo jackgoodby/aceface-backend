@@ -8,9 +8,9 @@ up: clean build-dev init-db-seed sqlc-gen
 
 clean:
 	rm -Rf .aws-sam/build/*/bootstrap
-	rm -Rf .aws-sam/build/template.yaml
+	#rm -Rf .aws-sam/build/template.yaml
 	rm -Rf .aws-sam/cache/*
-	docker compose -f docker-compose.yml down -v --remove-orphans
+	#docker compose -f docker-compose.yml down -v --remove-orphans
 	#docker compose run --rm yarn
 
 build-dev:
