@@ -15,7 +15,7 @@ Globals:
     MemorySize: 128
     VpcConfig:
       SecurityGroupIds:
-        - sg-0c449a4e1f93af48c
+        - sg-010dd40dda6133610
       SubnetIds:
         - subnet-0ece193c2f22c73d6
         - subnet-046b068de6141e571

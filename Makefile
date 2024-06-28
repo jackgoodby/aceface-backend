@@ -4,7 +4,7 @@ WHITE  := $(shell tput -Txterm setaf 7)
 YELLOW := $(shell tput -Txterm setaf 3)
 RESET  := $(shell tput -Txterm sgr0)
 
-up: clean build-dev init-param-store init-db-seed sqlc-gen
+up: clean build-dev init-db-seed sqlc-gen
 
 clean:
 	rm -Rf .aws-sam/build/*/bootstrap
@@ -16,11 +16,11 @@ clean:
 build-dev:
 	#docker compose -f docker-compose.yml build --no-cache aceface-db
 	docker compose -f docker-compose.yml build aceface-db
-	docker compose -f docker-compose.yml build localstack
+	#docker compose -f docker-compose.yml build localstack
 
-init-param-store:
-	docker compose up -d --wait localstack
-	aws ssm put-parameter --name "LAMBDA_ENV" --value "local" --type "String" --profile default --overwrite > /dev/null
+#init-param-store:
+#	docker compose up -d --wait localstack
+#	aws ssm put-parameter --name "LAMBDA_ENV" --value "local" --type "String" --profile default --overwrite > /dev/null
 
 init-db-seed:
 	docker compose up -d --wait aceface-db

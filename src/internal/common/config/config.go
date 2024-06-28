@@ -1,6 +1,7 @@
 package config
 
 import (
+	"net/url"
 	"sync"
 	"time"
 
@@ -65,7 +66,7 @@ func GetConfig() *ConfigStruct {
 			DBHost:                     common.GetEnv("DB_HOST", ""),
 			DBPort:                     common.GetEnv("DB_PORT", ""),
 			DBUser:                     common.GetEnv("DB_USER", ""),
-			DBPass:                     common.GetEnv("DB_PASS", ""),
+			DBPass:                     url.QueryEscape(common.GetEnv("DB_PASS", "")),
 			DBName:                     common.GetEnv("DB_NAME", ""),
 			PrimaryTableName:           common.GetEnv("PRIMARY_TABLE_NAME", ""),
 			EmailSignInSortKey:         "email",
