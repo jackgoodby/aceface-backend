@@ -58,6 +58,39 @@ Resources:
   #          CacheTtlInSeconds: 300
   #      Tags:
   #        CacheMethods: All
+  GetCompetitionsFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: src/lambda/getCompetitions/
+      Handler: bootstrap
+      Role: arn:aws:iam::196325156910:role/aceface-lambda-rds-full
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /competitions
+            Method: GET
+            RestApiId:
+              Ref: AceFaceApiGatewayApi
+
+  GetCompetitionFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: src/lambda/getCompetition/
+      Handler: bootstrap
+      Role: arn:aws:iam::196325156910:role/aceface-lambda-rds-full
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /competitions/{uuid}
+            Method: GET
+            RestApiId:
+              Ref: AceFaceApiGatewayApi
 
   GetCourtsFunction:
     Type: AWS::Serverless::Function

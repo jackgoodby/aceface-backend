@@ -125,3 +125,5 @@ INSERT INTO court (id, court_number, alt_name, surface, slot_set_id) VALUES (11,
 INSERT INTO court (id, court_number, alt_name, surface, slot_set_id) VALUES (12, 12, NULL, 'Tiger Turf', '83e4854d-ba01-4e0a-96a4-9fc7466dca17');
 INSERT INTO court (id, court_number, alt_name, surface, slot_set_id) VALUES (13, 13, NULL, 'Tarmac', '83e4854d-ba01-4e0a-96a4-9fc7466dca17');
 INSERT INTO court (id, court_number, alt_name, surface, slot_set_id) VALUES (14, 14, NULL, 'Tarmac', '83e4854d-ba01-4e0a-96a4-9fc7466dca17');
+
+INSERT INTO public.competition (id, uuid, comp_type, name, identifier, is_internal, start_date, end_date) VALUES (1, 'ed480663-af77-48f6-a84f-1eb2de862fa9', 'competition', 'SLTC Annual Club Championships', '2024', true, '2024-06-17 00:00Z', '2024-07-21 23:59Z');

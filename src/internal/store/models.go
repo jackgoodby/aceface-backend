@@ -9,6 +9,17 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Competition struct {
+	ID         int32
+	Uuid       uuid.UUID
+	CompType   string
+	Name       string
+	Identifier pgtype.Text
+	IsInternal bool
+	StartDate  pgtype.Timestamptz
+	EndDate    pgtype.Timestamptz
+}
+
 type Court struct {
 	ID          int32
 	Uuid        uuid.UUID
@@ -35,5 +46,5 @@ type Member struct {
 	Dob        pgtype.Date
 	Email      string
 	ProfileUrl pgtype.Text
-	CreatedAt  pgtype.Timestamp
+	CreatedAt  pgtype.Timestamptz
 }

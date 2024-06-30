@@ -10,7 +10,7 @@ CREATE TABLE member
     dob date,
     email varchar(255) NOT NULL,
     profile_url varchar(255),
-    created_at timestamp(0) default NULL::timestamp without time zone
+    created_at TIMESTAMPTZ NOT NULL
 );
 ALTER SEQUENCE member_id_seq OWNED BY member.id;
 CREATE UNIQUE INDEX uniq_member_uuid ON member(uuid);
@@ -46,7 +46,24 @@ ALTER SEQUENCE court_id_seq OWNED BY court.id;
 CREATE UNIQUE INDEX uniq_court_uuid ON court(uuid);
 CREATE INDEX idx_court_slot_set_id on court(slot_set_id);
 
+
+CREATE SEQUENCE competition_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+CREATE TABLE competition
+(
+    id integer NOT NULL PRIMARY KEY DEFAULT nextval('competition_id_seq'),
+    uuid UUID DEFAULT uuid_generate_v4() NOT NULL,
+    comp_type varchar(50) NOT NULL,
+    name varchar(255) NOT NULL,
+    identifier varchar(255),
+    is_internal boolean NOT NULL,
+    start_date TIMESTAMPTZ NOT NULL,
+    end_date TIMESTAMPTZ NOT NULL
+);
+ALTER SEQUENCE competition_id_seq OWNED BY competition.id;
+CREATE UNIQUE INDEX uniq_competition_uuid ON competition(uuid);
+
 -- +goose Down
 DROP TABLE member;
 DROP TABLE court;
 DROP TABLE court_slot_set;
+DROP TABLE competition;
