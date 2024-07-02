@@ -126,6 +126,74 @@ Resources:
             RestApiId:
               Ref: AceFaceApiGatewayApi
 
+  GetMatchesFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: src/lambda/getMatches/
+      Handler: bootstrap
+      Role: arn:aws:iam::196325156910:role/aceface-lambda-rds-full
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /matches
+            Method: GET
+            RestApiId:
+              Ref: AceFaceApiGatewayApi
+
+  GetMatchFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: src/lambda/getMatch/
+      Handler: bootstrap
+      Role: arn:aws:iam::196325156910:role/aceface-lambda-rds-full
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /matches/{uuid}
+            Method: GET
+            RestApiId:
+              Ref: AceFaceApiGatewayApi
+
+  GetMatchScoreFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: src/lambda/getMatchScore/
+      Handler: bootstrap
+      Role: arn:aws:iam::196325156910:role/aceface-lambda-rds-full
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /matches/{uuid}/score
+            Method: GET
+            RestApiId:
+              Ref: AceFaceApiGatewayApi
+
+  PutMatchScoreFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      CodeUri: src/lambda/putMatchScore/
+      Handler: bootstrap
+      Role: arn:aws:iam::196325156910:role/aceface-lambda-rds-full
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /matches/{uuid}/score
+            Method: PUT
+            RestApiId:
+              Ref: AceFaceApiGatewayApi
+
   GetMembersFunction:
     Type: AWS::Serverless::Function
     Metadata:

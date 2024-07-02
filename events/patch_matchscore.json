@@ -1,0 +1,46 @@
+{
+  "resource": "/matches/uuid",
+  "path": "/matches/d0de9145-5c87-4a3c-b023-f8940cd81396/scores",
+  "httpMethod": "PATCH",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "uuid": "d0de9145-5c87-4a3c-b023-f8940cd81396"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "123456",
+    "resourcePath": "/matches/{uuid}",
+    "httpMethod": "PATCH",
+    "extendedRequestId": "request-id",
+    "requestTime": "01/Jul/2024:19:03:58 +0000",
+    "path": "/dev/matches/d0de9145-5c87-4a3c-b023-f8940cd81396/scores",
+    "accountId": "123456789012",
+    "protocol": "HTTP/1.1",
+    "stage": "dev",
+    "domainPrefix": "testPrefix",
+    "requestTimeEpoch": 1614996202042,
+    "requestId": "c8d3a3b7-3fe6-11e9-9a9e-8b1f759d9cc2",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "127.0.0.1",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "Custom User Agent String",
+      "user": null
+    },
+    "domainName": "testPrefix.testDomainName",
+    "apiId": "1234567890"
+  },
+  "body": "{\"A\": {\"games\": [5], \"current\": \"40\"}, \"B\": {\"games\": [5], \"current\": \"30\"}}",
+  "isBase64Encoded": false
+}

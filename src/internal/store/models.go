@@ -37,6 +37,12 @@ type CourtSlotSet struct {
 	SlotTimes   []byte
 }
 
+type Match struct {
+	ID    int32
+	Uuid  uuid.UUID
+	Score []byte
+}
+
 type Member struct {
 	ID         int32
 	Uuid       uuid.UUID

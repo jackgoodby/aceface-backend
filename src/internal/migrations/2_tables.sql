@@ -62,7 +62,20 @@ CREATE TABLE competition
 ALTER SEQUENCE competition_id_seq OWNED BY competition.id;
 CREATE UNIQUE INDEX uniq_competition_uuid ON competition(uuid);
 
+
+CREATE SEQUENCE match_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+CREATE TABLE match
+(
+    id integer NOT NULL PRIMARY KEY DEFAULT nextval('match_id_seq'),
+    uuid UUID DEFAULT uuid_generate_v4() NOT NULL,
+    score jsonb DEFAULT '{"A":{"games":[],"current":""},"B":{"games":[],"current":""}}'
+);
+ALTER SEQUENCE match_id_seq OWNED BY match.id;
+CREATE UNIQUE INDEX uniq_match_uuid ON match(uuid);
+
+
 -- +goose Down
+DROP TABLE match;
 DROP TABLE member;
 DROP TABLE court;
 DROP TABLE court_slot_set;

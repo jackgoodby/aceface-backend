@@ -126,4 +126,8 @@ INSERT INTO court (id, court_number, alt_name, surface, slot_set_id) VALUES (12,
 INSERT INTO court (id, court_number, alt_name, surface, slot_set_id) VALUES (13, 13, NULL, 'Tarmac', '83e4854d-ba01-4e0a-96a4-9fc7466dca17');
 INSERT INTO court (id, court_number, alt_name, surface, slot_set_id) VALUES (14, 14, NULL, 'Tarmac', '83e4854d-ba01-4e0a-96a4-9fc7466dca17');
 
-INSERT INTO public.competition (id, uuid, comp_type, name, identifier, is_internal, start_date, end_date) VALUES (1, 'ed480663-af77-48f6-a84f-1eb2de862fa9', 'competition', 'SLTC Annual Club Championships', '2024', true, '2024-06-17 00:00Z', '2024-07-21 23:59Z');
+INSERT INTO competition (id, uuid, comp_type, name, identifier, is_internal, start_date, end_date) VALUES (1, 'ed480663-af77-48f6-a84f-1eb2de862fa9', 'competition', 'SLTC Annual Club Championships', '2024', true, '2024-06-17 00:00Z', '2024-07-21 23:59Z');
+
+INSERT INTO match (id, uuid, score) VALUES (1, 'd0de9145-5c87-4a3c-b023-f8940cd81396', '{"A": {"games": [5], "current": "40"}, "B": {"games": [4], "current": "A"}}');
+INSERT INTO match (id, uuid, score) VALUES (2, '34c82b84-240e-4f43-9121-43b65cdaf644', '{"A": {"games": [6,4], "current": ""}, "B": {"games": [5,4], "current": ""}}');
+INSERT INTO match (id, uuid, score) VALUES (3, '32a2576f-d2fd-4eb6-8de9-c8ce1ac9092f', '{"A": {"games": [3], "current": "15"}, "B": {"games": [3], "current": "15"}}');
